@@ -199,7 +199,7 @@ def schedule():
             print()
 
 
-l = League()
-l.playSeason()
+#l = League()
+#l.playSeason()
 # p = Playoffs(l)
 # p.setUpPlayoffs()
