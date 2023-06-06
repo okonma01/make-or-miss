@@ -1,0 +1,166 @@
+<html>
+  <head>
+    <title>Team Roster Ratings</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+  </head>
+  <body>
+    <!-- <h1>{{ team.name }}</h1> -->
+
+    <h1>{{ team._name }} Roster Ratings</h1>
+    <h2>Roster</h2>
+    <h3>Lineup</h3>
+    <table>
+      <tr>
+        <th class="player-name">Name</th>
+        <th>Position</th>
+        <th>Archetype</th>
+        <th>Height</th>
+        <th>Speed</th>
+        <th>Strength</th>
+        <th>Stamina</th>
+        <th>Jumping</th>
+        <th>Inside shot</th>
+        <th>Mid range</th>
+        <th>Three point</th>
+        <th>Free throw</th>
+        <th>Passing</th>
+        <th>Handle</th>
+        <th>Rebound</th>
+        <th>Offensive IQ</th>
+        <th>Defensive IQ</th>
+        <th>Overall</th>
+      </tr>
+      {% for player in team._lineup %}
+      <tr>
+        <td>{{ player._name }}</td>
+        <td>{{ player._pos }}</td>
+        <td>{{ player._archetype }}</td>
+        <td>{{ height(player._height_in_inches) }}</td>
+        <td>{{ player.rating('spd') }}</td>
+        <td>{{ player.rating('stam') }}</td>
+        <td>{{ player.rating('jmp') }}</td>
+        <td>{{ player.rating('stre') }}</td>
+        <td>{{ player.rating('ins') }}</td>
+        <td>{{ player.rating('mid') }}</td>
+        <td>{{ player.rating('tp') }}</td>
+        <td>{{ player.rating('ft') }}</td>
+        <td>{{ player.rating('pss') }}</td>
+        <td>{{ player.rating('hndl') }}</td>
+        <td>{{ player.rating('reb') }}</td>
+        <td>{{ player.rating('oiq') }}</td>
+        <td>{{ player.rating('diq') }}</td>
+        <td>{{ ovr(player, player._pos) }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div style="width: 100%; border: solid 1px black; margin: 15px"></div>
+    <h3 style="margin-top: 5px;">Bench</h3>
+    <table>
+      <tr>
+        <th class="player-name">Name</th>
+        <th>Position</th>
+        <th>Archetype</th>
+        <th>Height</th>
+        <th>Speed</th>
+        <th>Strength</th>
+        <th>Stamina</th>
+        <th>Jumping</th>
+        <th>Inside shot</th>
+        <th>Mid range</th>
+        <th>Three point</th>
+        <th>Free throw</th>
+        <th>Passing</th>
+        <th>Handle</th>
+        <th>Rebound</th>
+        <th>Offensive IQ</th>
+        <th>Defensive IQ</th>
+        <th>Overall</th>
+      </tr>
+      {% for player in team._bench %}
+      <tr>
+        <td>{{ player._name }}</td>
+        <td>{{ player._pos }}</td>
+        <td>{{ player._archetype }}</td>
+        <td>{{ height(player._height_in_inches) }}</td>
+        <td>{{ player.rating('spd') }}</td>
+        <td>{{ player.rating('stam') }}</td>
+        <td>{{ player.rating('jmp') }}</td>
+        <td>{{ player.rating('stre') }}</td>
+        <td>{{ player.rating('ins') }}</td>
+        <td>{{ player.rating('mid') }}</td>
+        <td>{{ player.rating('tp') }}</td>
+        <td>{{ player.rating('ft') }}</td>
+        <td>{{ player.rating('pss') }}</td>
+        <td>{{ player.rating('hndl') }}</td>
+        <td>{{ player.rating('reb') }}</td>
+        <td>{{ player.rating('oiq') }}</td>
+        <td>{{ player.rating('diq') }}</td>
+        <td>{{ ovr(player, player._pos) }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <div style="width: 100%; border: solid 1px black; margin: 15px"></div>
+    <h3 style="margin-top: 5px;">Others</h3>
+    <table>
+      <tr>
+        <th class="player-name">Name</th>
+        <th>Position</th>
+        <th>Archetype</th>
+        <th>Height</th>
+        <th>Speed</th>
+        <th>Strength</th>
+        <th>Stamina</th>
+        <th>Jumping</th>
+        <th>Inside shot</th>
+        <th>Mid range</th>
+        <th>Three point</th>
+        <th>Free throw</th>
+        <th>Passing</th>
+        <th>Handle</th>
+        <th>Rebound</th>
+        <th>Offensive IQ</th>
+        <th>Defensive IQ</th>
+        <th>Overall</th>
+      </tr>
+      {% for player in team._players %}
+      {% if player not in team._lineup and player not in team._bench %}
+      <tr>
+        <td>{{ player._name }}</td>
+        <td>{{ player._pos }}</td>
+        <td>{{ player._archetype }}</td>
+        <td>{{ height(player._height_in_inches) }}</td>
+        <td>{{ player.rating('spd') }}</td>
+        <td>{{ player.rating('stam') }}</td>
+        <td>{{ player.rating('jmp') }}</td>
+        <td>{{ player.rating('stre') }}</td>
+        <td>{{ player.rating('ins') }}</td>
+        <td>{{ player.rating('mid') }}</td>
+        <td>{{ player.rating('tp') }}</td>
+        <td>{{ player.rating('ft') }}</td>
+        <td>{{ player.rating('pss') }}</td>
+        <td>{{ player.rating('hndl') }}</td>
+        <td>{{ player.rating('reb') }}</td>
+        <td>{{ player.rating('oiq') }}</td>
+        <td>{{ player.rating('diq') }}</td>
+        <td>{{ ovr(player, player._pos) }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </table>
+  </body>
+</html>
+
+<!-- player_dict = {
+            'name': player._name,
+            'hgt': player.rating('hgt'),
+            'spd': player.rating('spd'),
+            'stre': player.rating('stre'),
+            'ins': player.rating('ins'),
+            'mid': player.rating('mid'),
+            '3pt': player.rating('tp'),
+            'oiq': player.rating('oiq'),
+            'shot_usage': player.rating('shot_usage'),
+            'foul_drawing': player.rating('drawing_foul'),
+            'defense_perimeter': player.rating('defense_perimeter'),
+            'defense_inside': player.rating('defense_inside'),
+        } -->

@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <title>Team View</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+  </head>
+  <body>
+    <!-- <h1>{{ team.name }}</h1> -->
+
+    <h1>{{ team._name }} Players</h1>
+    <p>{{ team._lineup[0]._name }}</p>
+    <h2>Roster</h2>
+    <h4>Lineup</h4>
+    <table>
+      <tr>
+        <th class="player-name">Name</th>
+        <th>Hgt</th>
+        <th>Archetype</th>
+        <th>Spd</th>
+        <th>Stre</th>
+        <th>Ins</th>
+        <th>Mid</th>
+        <th>Tp</th>
+        <th>OIQ</th>
+        <th>Usg</th>
+        <th>FDraw</th>
+        <th>PDef</th>
+        <th>IDef</th>
+      </tr>
+      {% for player in lineup_ratings %}
+      <tr>
+        <td>{{ player.name }}</td>
+        <td>{{ player.hgt }}</td>
+        <td>{{ player.archetype }}</td>
+        <td>{{ player.spd }}</td>
+        <td>{{ player.stre }}</td>
+        <td>{{ player.ins }}</td>
+        <td>{{ player.mid }}</td>
+        <td>{{ player.tp }}</td>
+        <td>{{ player.oiq }}</td>
+        <td>{{ player.shot_usage }}</td>
+        <td>{{ player.foul_drawing }}</td>
+        <td>{{ player.defense_perimeter }}</td>
+        <td>{{ player.defense_inside }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <h4>Bench</h4>
+    <table>
+      <tr>
+        <th class="player-name">Name</th>
+        <th>Archetype</th>
+        <th>Hgt</th>
+        <th>Spd</th>
+        <th>Stre</th>
+        <th>Ins</th>
+        <th>Mid</th>
+        <th>Tp</th>
+        <th>OIQ</th>
+        <th>Usg</th>
+        <th>FDraw</th>
+        <th>PDef</th>
+        <th>IDef</th>
+      </tr>
+      {% for player in bench_ratings %}
+      <tr>
+        <td>{{ player.name }}</td>
+        <td>{{ player.archetype }}</td>
+        <td>{{ player.hgt }}</td>
+        <td>{{ player.spd }}</td>
+        <td>{{ player.stre }}</td>
+        <td>{{ player.ins }}</td>
+        <td>{{ player.mid }}</td>
+        <td>{{ player.tp }}</td>
+        <td>{{ player.oiq }}</td>
+        <td>{{ player.shot_usage }}</td>
+        <td>{{ player.foul_drawing }}</td>
+        <td>{{ player.defense_perimeter }}</td>
+        <td>{{ player.defense_inside }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
+
+<!-- player_dict = {
+            'name': player._name,
+            'hgt': player.rating('hgt'),
+            'spd': player.rating('spd'),
+            'stre': player.rating('stre'),
+            'ins': player.rating('ins'),
+            'mid': player.rating('mid'),
+            '3pt': player.rating('tp'),
+            'oiq': player.rating('oiq'),
+            'shot_usage': player.rating('shot_usage'),
+            'foul_drawing': player.rating('drawing_foul'),
+            'defense_perimeter': player.rating('defense_perimeter'),
+            'defense_inside': player.rating('defense_inside'),
+        } -->

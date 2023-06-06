@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>Team View</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+  </head>
+  <body>
+    <!-- <h1>{{ team.name }}</h1> -->
+
+    <h1>{{ team._name }} Players</h1>
+
+    <h2>Roster</h2>
+    <h4>Lineup</h4>
+    <table>
+      <tr>
+        <th class="player-name">Name</th>
+        <th>Pos</th>
+        <th>MP</th>
+        <th>OVR</th>
+        <th>Stam</th>
+        <th>HalfC</th>
+        <th>FastB</th>
+        <th>Usg</th>
+        <th>DefIns</th>
+        <th>DefPer</th>
+      </tr>
+      {% for player in team._lineup %}
+      <tr>
+        <!-- follow naming convention at the end of code -->
+        <td>{{ player._name }}</td>
+        <td>{{ player._pos }}</td>
+        <td>{{ player.stat('mp') }}</td>
+        <td>{{ player.ovr(player._pos.value) }}</td>
+        <td>{{ player.rating('stam') }}</td>
+        <td>{{ player.rating('halfcourt_usage') }}</td>
+        <td>{{ player.rating('fastbreak_usage') }}</td>
+        <td>{{ player.rating('shot_usage') }}</td>
+        <td>{{ player.rating('defense_inside') }}</td>
+        <td>{{ player.rating('defense_perimeter') }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h4>Bench</h4>
+    <table>
+      <tr>
+        <th class="player-name">Name</th>
+        <th>Pos</th>
+        <th>MP</th>
+        <th>OVR</th>
+        <th>Stam</th>
+        <th>HalfC</th>
+        <th>FastB</th>
+        <th>Usg</th>
+        <th>DefIns</th>
+        <th>DefPer</th>
+      </tr>
+      {% for player in bench_stats %}
+      <tr>
+        <!-- follow naming convention at the end of code -->
+        <td>{{ player.name }}</td>
+        <td>{{ player.pos }}</td>
+        <td>{{ player.mp }}</td>
+        <td>{{ player.ovr }}</td>
+        <td>{{ player.stam }}</td>
+        <td>{{ player.halfcourt_usage }}</td>
+        <td>{{ player.fastbreak_usage }}</td>
+        <td>{{ player.shot_usage }}</td>
+        <td>{{ player.defense_inside }}</td>
+        <td>{{ player.defense_perimeter }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
+
+
+<!-- player_dict = {
+            'name': player._name,
+            'pos': player._pos,
+            'ovr': player.ovr(pos_val),
+            'mp': player.stat('mp'),
+            'stam': player.rating('stam'),
+            'half c': player.rating('halfcourt_usage'),
+            'fast b': player.rating('fastbreak_usage'),
+            'shot usg': player.rating('shot_usage'),
+            'ins def': player.rating('defense_inside'),
+            'per def': player.rating('defense_perimeter'),
+            # 'reb': player._stat.orb + player._stat.drb,
+            # 'ast': player._stat.ast
+        } -->

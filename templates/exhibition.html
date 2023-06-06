@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Basketball Simulation</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css" />
+  </head>
+  <body>
+    <h1>{{ team1_name }} vs {{ team2_name }}</h1>
+    <p>{{ team1_name }}: {{ team1_score }}</p>
+    <p>{{ team2_name }}: {{ team2_score }}</p>
+    <p>Time remaining: {{ time_remaining }}</p>
+
+    <h2>{{ team1_name }} Players</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>PTS</th>
+        <th>REB</th>
+        <th>AST</th>
+      </tr>
+      {% for player in team1_players %}
+      <tr>
+        <td>{{ player.name }}</td>
+        <td>{{ player.pts }}</td>
+        <td>{{ player.reb }}</td>
+        <td>{{ player.ast }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h2>{{ team2_name }} Players</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>PTS</th>
+        <th>REB</th>
+        <th>AST</th>
+      </tr>
+      {% for player in team2_players %}
+      <tr>
+        <td>{{ player.name }}</td>
+        <td>{{ player.pts }}</td>
+        <td>{{ player.reb }}</td>
+        <td>{{ player.ast }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
