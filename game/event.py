@@ -7,8 +7,8 @@ from util.helpers import generate_id
 
 @dataclass
 class GameEvent:
-    # "shot_made", "shot_missed", "free_throw", "foul" (TODO), "turnover", "substitution"
-    # also "tip_off", "quarter_change", "game_end"
+    # "shot_made", "shot_missed", "free_throw", "rebound", "foul" (TODO), "turnover", "substitution"
+    # also "tip_off", "quarter_end", "game_end"
     event_type: str
     timestamp: float  # Game clock time in seconds
     quarter: int
@@ -20,7 +20,7 @@ class GameEvent:
     # tip_off - Done (no details needed)
 
     # For quarter changes:
-    # quarter_change - Done (no details needed)
+    # quarter_end - Done (no details needed)
 
     # For game end:
     # game_end - Done (no details needed)
@@ -33,17 +33,20 @@ class GameEvent:
     #    "shooting_foul": bool,
     #    "assist_player_id": Optional[int],  # Player who assisted, if any
     #    "defender_id": Optional[int]  # Player who defended, if any
-    #    "rebounder_id": Optional[int]  # Player who got the rebound, if any
-    #    "rebound_type": Optional["offensive|defensive"],
     # }
 
     # For free throws:
     # free_throw - Done
     # details = {
-    #    "made_sequence": List[bool]  # List of booleans indicating made or missed free throws
-    #    "shooter_id": int
-    #    "rebounder_id": Optional[int]  # Player who got the rebound on the last free throw, if any
-    #    "rebound_type": Optional["offensive|defensive"],
+    #    "made": bool,
+    #    "free_throw_num": int,  # 1, 2, or 3 in sequence
+    #    "total_free_throws": int  # Total in this trip
+    # }
+
+    # For rebounds:
+    # rebound - Done
+    # details = {
+    #    "rebound_type": "offensive|defensive"
     # }
 
     # For fouls: TODO - this is not implemented in the game engine yet
@@ -145,7 +148,7 @@ class GameLogger:
     def __init__(self, game):
         self.game = game
         self.event_log = self._initialize_event_log()
-    
+
     def _initialize_event_log(self) -> GameEventLog:
         # Set up teams information as an array
         teams = [
@@ -160,14 +163,14 @@ class GameLogger:
                 "players": [self._player_info(p, 1) for p in self.game.teams[1]._players]
             }
         ]
-        
+
         return GameEventLog(
             game_id=generate_id(self.game),
             date=datetime.now().strftime("%Y-%m-%d"),
             teams=teams,
             events=[]
         )
-    
+
     def _player_info(self, player, team_id) -> Dict:
         # Extract relevant player information
         return {
@@ -175,12 +178,12 @@ class GameLogger:
             "player_name": player._name,
             "player_index": self.game.teams[team_id]._players.index(player)
         }
-    
+
     def log_event(self, event_type, player_id, details=None) -> None:
         # Create and add event to the log
         if details is None:
             details = {}
-            
+
         event = GameEvent(
             event_type=event_type,
             timestamp=self.game.game_clock,
@@ -189,15 +192,15 @@ class GameLogger:
             player_id=player_id,
             details=details
         )
-        
+
         self.event_log.events.append(event)
-    
+
     def save_to_file(self, filename=None) -> str:
         # Save the event log to a JSON file
         if filename is None:
             filename = f"game_{self.event_log.game_id}.json"
-        
+
         with open(filename, 'w') as f:
             f.write(self.event_log.to_json())
-        
+
         return filename

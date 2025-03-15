@@ -24,6 +24,7 @@ from util.helpers import generate_id
 # 3. right now, g.assist_man (DONE) and g.shot_taker are random players - fix this
 # 4. turnovers are also random - fix this
 
+
 class Game(object):
 
     states = ['tip_off', 'inbound', 'end_of_quarter', 'game_over',
@@ -32,7 +33,8 @@ class Game(object):
     def __init__(self):
         self._id: str = generate_id(self)
         self.logger: None         # initialize logger after teams are set
-        self.machine: Machine = Machine(model=self, states=Game.states, initial='tip_off')
+        self.machine: Machine = Machine(
+            model=self, states=Game.states, initial='tip_off')
         self.game_clock: int = 720
         self.quarter_no: int = 1
         self.teams: List[TeamGameSim] = list()
@@ -49,6 +51,10 @@ class Game(object):
         self.pos_per_sub = 6
 
     def play_game(self) -> None:
+        # This ensures the logger is initialized before the game starts
+        # even if we don't call tip_off directly
+        from game.game_engine import ensure_logger
+        ensure_logger(self)
         while self.state != 'game_over':
             match self.state:
                 case 'tip_off':
