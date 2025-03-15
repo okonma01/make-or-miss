@@ -1,4 +1,11 @@
 from typing import List
+import secrets, string
+# import game
+# import game.index
+# import player
+# import player.index
+# import team
+# import team.index
 
 
 def weights(n: int = 10, sum: int = 100, delta: float = 0.2) -> List[float]:
@@ -38,3 +45,22 @@ def height_rating(height_in_inches: int) -> int:
     max_hgt = 93    # 7'9"
     hgt = bound((100 * (height_in_inches - min_hgt)) / (max_hgt - min_hgt))
     return int(hgt)
+
+
+def generate_id(obj_type, len=4) -> str:
+    # if isinstance(obj_type, player.index.PlayerGameSim):
+    #     prefix = 'p'
+    # elif isinstance(obj_type, team.index.TeamGameSim):
+    #     prefix = 't'
+    # elif isinstance(obj_type, game.index.Game):
+    #     prefix = 'g'
+    # # to add: league, season, etc.
+    # else:
+    #     prefix = ''
+
+    prefix = type(obj_type).__name__[0].lower()
+    
+    characters = string.ascii_letters + string.digits  # A-Z, a-z, 0-9
+    random_id = ''.join(secrets.choice(characters) for _ in range(len))
+    
+    return prefix + random_id

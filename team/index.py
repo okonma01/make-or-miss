@@ -4,6 +4,7 @@ from player.overall import fatigue_adj_ovr, overall
 from player.index import PlayerGameSim, pos_dict
 from team.stat import TeamStat
 from team.util import get_best_at_position, get_pos_depths
+from util.helpers import generate_id
 
 # changed team stat mp to float type - DONE
 # commented out pos and opp_pos in team stat - DONE
@@ -21,7 +22,7 @@ class TeamGameSim():
                   Position.C:  3}  # fc + c
 
     def __init__(self) -> None:
-        self._id: str = 'team' + str(TeamGameSim.count)
+        self._id: str = generate_id(self)
         TeamGameSim.count += 1
         self._name: str = str()
         self._players: List[PlayerGameSim] = list()

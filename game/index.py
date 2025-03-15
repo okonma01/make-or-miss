@@ -4,6 +4,8 @@ from datetime import timedelta
 from team.index import TeamGameSim
 from game.game_state import GameState
 import game.game_engine as game_engine
+from game.event import GameLogger
+from util.helpers import generate_id
 
 # changed game_clock attribute of Game class to int type (seconds)
 # changed game_engine.reset_clock() to set game_clock to 720 (12 minutes)
@@ -28,6 +30,8 @@ class Game(object):
               'make_assist', 'take_shot', 'rebound', 'free_throw']
 
     def __init__(self):
+        self._id: str = generate_id(self)
+        self.logger: None         # initialize logger after teams are set
         self.machine: Machine = Machine(model=self, states=Game.states, initial='tip_off')
         self.game_clock: int = 720
         self.quarter_no: int = 1

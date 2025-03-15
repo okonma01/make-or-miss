@@ -4,7 +4,7 @@ from player.position import Position
 from player.rating import Rating, get_ratings
 from player.stat import PlayerStat
 # from .tendency import Tendency
-from util.helpers import height_in_feet
+from util.helpers import height_in_feet, generate_id
 
 # changed player's court_time and bench_time to int type
 # changed player's gp to g
@@ -22,7 +22,7 @@ class PlayerGameSim():
     count = 0
     def __init__(self) -> None:
         # global count
-        self._id = 'player' + str(PlayerGameSim.count)
+        self._id = generate_id(self)
         PlayerGameSim.count += 1
         self._name = str()
         self._height_in_inches = int()
