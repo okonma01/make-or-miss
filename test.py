@@ -1,35 +1,29 @@
-from time import time
+from util.team_util import load_team_from_csv
 
-a = [1 for i in range(1000000)]
-def f1():
-    for i in range(len(a)):
-        a[i] /= 2
+# Load Celtics and Nuggets teams
+celtics = load_team_from_csv('celtics.csv')
+nuggets = load_team_from_csv('nuggets.csv')
 
-# compare with multiplication
-def f2():
-    for i in range(len(a)):
-        a[i] *= 0.5
-
-point_dict = {'f1': 0, 'f2': 0, 'tie': 0}
-
-# compare f1 and f2, give a point to the faster one
-n = 10000
-for i in range(n):
-    t1 = time()
-    f1()
-    t1 = time() - t1
-    t2 = time()
-    f2()
-    t2 = time() - t2
-    if t1 < t2:
-        point_dict['f1'] += 1
-    elif t2 < t1:
-        point_dict['f2'] += 1
-    else:
-        point_dict['tie'] += 1
-
-# print results
-print('After {} iterations:'.format(n))
-for k, v in point_dict.items():
-    print('{}: {} points'.format(k, v))
+# Print team info
+def print_team_info(team):
+    print(f"\n=== {team._name} ===")
+    print(f"Number of players: {len(team._players)}")
     
+    print("\nStarting lineup:")
+    for i, player in enumerate(team._lineup):
+        print(f"{i+1}. {player._name} ({player._pos.name}) - Height: {player._height_in_inches//12}'{player._height_in_inches%12}\"")
+    
+    print("\nBench players:")
+    for i, player in enumerate(team._bench):
+        print(f"{i+1}. {player._name} ({player._pos.name})")
+    
+    # Print a key player's ratings
+    star_player = team._lineup[0]
+    print(f"\nSample player ratings for {star_player._name}:")
+    print(f"3PT: {star_player._rating.tp}")
+    print(f"FG: {star_player._rating.ins}")
+    print(f"Speed: {star_player._rating.spd}")
+    print(f"Overall: {star_player.ovr()}")
+
+print_team_info(celtics)
+print_team_info(nuggets)

@@ -1,6 +1,7 @@
 import random
 from typing import List
 
+from game.game_engine import ensure_logger
 from game.game_state import GameState
 from player.overall import fatigue_adj_ovr
 from team.util import get_best_at_position
@@ -284,6 +285,12 @@ def run_clock(g, turnover: bool = False) -> None:
     # TO-DO:
     # 1. add minutes to players currently on the court - DONE
     # 2. tire on-court players out; recover players on bench - DONE (check record_stat 'energy')
+    
+    # Store the current game clock time before updating
+    previous_time = g.game_clock
+    previous_minute = previous_time // 60
+    
+    # Existing run_clock logic to determine seconds elapsed
     if turnover:
         seconds = random.randint(8, 14)
     else:
@@ -291,14 +298,25 @@ def run_clock(g, turnover: bool = False) -> None:
             seconds = random.randint(8, 16)
         else:
             seconds = random.randint(16, 24)
+
+
+    # Update clock
+    new_time = max(0, g.game_clock - seconds)
+    new_minute = new_time // 60
+
+    # Check if we've crossed a minute boundary
+    if new_minute < previous_minute:
+        # Make sure the logger exists
+        ensure_logger(g)
+        # Create a minute-based checkpoint
+        g.logger.create_checkpoint(checkpoint_type="minute")
+   
+    # Update the game clock
+    g.game_clock = new_time
+    
+    # Update players' minutes and fatigue
     update_mp(g, seconds)
     update_energy(g, seconds)
-    # if g.game_clock - seconds < GameEngine.end_clock:
-    #     g.game_clock = 0
-    if g.game_clock - seconds < 0:
-        g.game_clock = 0
-    else:
-        g.game_clock = g.game_clock - seconds
 
 
 def scores_tied(g) -> bool:

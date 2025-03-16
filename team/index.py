@@ -9,7 +9,7 @@ from util.helpers import generate_id
 # changed team stat mp to float type - DONE
 # commented out pos and opp_pos in team stat - DONE
 
-# change team stat mp back to int type (for seconds)
+# change team stat mp back to int type (for seconds) - DONE
 # remove trb from team stat.py
 # add asta to team stat.py
 

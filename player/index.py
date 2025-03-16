@@ -25,6 +25,7 @@ class PlayerGameSim():
         self._id = generate_id(self)
         PlayerGameSim.count += 1
         self._name = str()
+        self._jersey_no = int()
         self._height_in_inches = int()
         self._archetype = str()
         self._pos = Position.G
@@ -60,7 +61,9 @@ class PlayerGameSim():
             return -1
         return self._stat.__dict__[s]
 
-    def ovr(self, pos: int) -> int:
+    def ovr(self, pos: int = None) -> int:
+        if pos is None:
+            pos = self._pos.value
         if self._pos not in pos_dict[pos]:
             return -1
         return overall(self, self._pos)

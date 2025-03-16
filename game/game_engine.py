@@ -260,13 +260,16 @@ def end_of_quarter(g) -> None:
         }
     )
 
-    if g.quarter_no == 4:            # end of regulation
+    # Create quarterly checkpoint
+    g.logger.create_checkpoint(checkpoint_type="quarter")
+
+    # Existing end_of_quarter logic
+    if g.quarter_no == 4:  # end of regulation
         if scores_tied(g):
-            # go to overtime
-            g.to_inbound()
+            g.to_inbound()   # go to overtime
         else:
             g.to_game_over()
-    else:                               # we are not at q4 yet
+    else:    # we are not at q4 yet
         g.quarter_no += 1
         reset_clock(g)
         g.to_inbound()
