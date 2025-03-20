@@ -2,22 +2,9 @@ import random
 from dataclasses import dataclass
 from game.game_state import GameState
 from game.game_util import pick_player, record_stat, get_assist_man, get_steal_man, get_shot_taker, get_board_man, reset_game, round_mp, swap_teams, reset_variables, time_for_sub, do_subs, clock_over, turnover, run_clock, do_foul, do_shot, scores_tied, reset_clock
-from game.event import GameLogger
-from game.index import Game
-
-# def record_player_stat(g, t: int, p: int, s: str, amt: int = 1) -> None:
-#     g.teams[t]._players[p]._stat.__dict__[s] += amt
-
-
-# def record_team_stat(g, t: int, s: str, amt: int = 1) -> None:
-#     g.teams[t]._stat.__dict__[s] += amt
-
-
-# Add this helper function at the top of the file
-def ensure_logger(g: Game) -> None:
-    """Initialize logger if it doesn't exist yet"""
-    if not hasattr(g, 'logger') or g.logger is None:
-        g.logger = GameLogger(g)
+from game.game_util import ensure_logger
+# from game.event import GameLogger
+# from game.index import Game
 
 
 def tip_off(g) -> None:

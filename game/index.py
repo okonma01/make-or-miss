@@ -6,6 +6,7 @@ from game.game_state import GameState
 import game.game_engine as game_engine
 from game.event import GameLogger
 from util.helpers import generate_id
+from game.game_util import ensure_logger
 
 # changed game_clock attribute of Game class to int type (seconds)
 # changed game_engine.reset_clock() to set game_clock to 720 (12 minutes)
@@ -53,7 +54,6 @@ class Game(object):
     def play_game(self) -> None:
         # This ensures the logger is initialized before the game starts
         # even if we don't call tip_off directly
-        from game.game_engine import ensure_logger
         ensure_logger(self)
         while self.state != 'game_over':
             match self.state:

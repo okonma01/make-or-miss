@@ -15,7 +15,7 @@ from util.helpers import generate_id
 
 class TeamGameSim():
     count = 0
-    depth_dict = {Position.G:  2,  # g + gf
+    depth_dict = {Position.G:  3,  # g + gf
                   Position.GF: 3,  # g + gf
                   Position.F:  4,  # gf + f
                   Position.FC: 3,  # f + fc

@@ -1,10 +1,17 @@
 import random
 from typing import List
 
-from game.game_engine import ensure_logger
+# from game.game_engine import ensure_logger
 from game.game_state import GameState
 from player.overall import fatigue_adj_ovr
 from team.util import get_best_at_position
+from game.event import GameLogger
+
+# Add this helper function at the top of the file
+def ensure_logger(g) -> None:
+    """Initialize logger if it doesn't exist yet"""
+    if not hasattr(g, 'logger') or g.logger is None:
+        g.logger = GameLogger(g)
 
 
 def clock_over(g) -> bool:

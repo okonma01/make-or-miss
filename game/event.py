@@ -230,7 +230,7 @@ class GameLogger:
         ]
 
         return GameEventLog(
-            game_id=generate_id(self.game),
+            game_id=self.game._id,
             date=datetime.now().strftime("%Y-%m-%d"),
             teams=teams,
             events=[]

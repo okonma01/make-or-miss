@@ -20,8 +20,8 @@ def print_team_info(team):
     # Print a key player's ratings
     star_player = team._lineup[0]
     print(f"\nSample player ratings for {star_player._name}:")
-    print(f"3PT: {star_player._rating.tp}")
-    print(f"FG: {star_player._rating.ins}")
+    print(f"3pt: {star_player._rating.tp}")
+    print(f"Ins: {star_player._rating.ins}")
     print(f"Speed: {star_player._rating.spd}")
     print(f"Overall: {star_player.ovr()}")
 
