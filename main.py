@@ -1,26 +1,26 @@
-from util.team_util import load_team_from_csv
+from util.team_util import load_team_from_csv, load_team_from_json
 from game.index import Game
 import os
 
 
-def run_simulation_and_save_events(home_team_name, away_team_name):
+def run_simulation_and_save_events(home_team_id, away_team_id):
     """
     Load teams from CSV, run a game simulation, and save events to a JSON file
 
     Args:
-        home_team_csv: Path to home team CSV file
-        away_team_csv: Path to away team CSV file
+        home_team: Path to home team JSON file
+        away_team: Path to away team JSON file
         output_json_path: Path to save the JSON output
     """
 
     # Build paths to team files
     teams_dir = os.path.join('data', 'teams')
-    home_team_csv = os.path.join(teams_dir, f"{home_team_name}.csv")
-    away_team_csv = os.path.join(teams_dir, f"{away_team_name}.csv")
+    home_team = os.path.join(teams_dir, f"{home_team_id}.json")
+    away_team = os.path.join(teams_dir, f"{away_team_id}.json")
 
     # Load teams
-    home_team = load_team_from_csv(home_team_csv)
-    away_team = load_team_from_csv(away_team_csv)
+    home_team = load_team_from_json(home_team)
+    away_team = load_team_from_json(away_team)
 
     # Create and run game
     game = Game()
@@ -37,4 +37,4 @@ def run_simulation_and_save_events(home_team_name, away_team_name):
 
 
 # Run the simulation
-g = run_simulation_and_save_events('celtics.csv', 'nuggets.csv')
+g = run_simulation_and_save_events('celtics24', 'nuggets23')

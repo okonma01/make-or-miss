@@ -220,12 +220,22 @@ class GameLogger:
             {
                 "team_id": 0,
                 "team_name": self.game.teams[0]._name,
-                "players": [self._player_info(p, 0) for p in self.game.teams[0]._players]
+                "players": [self._player_info(p, 0) for p in self.game.teams[0]._players],
+                "starting_lineup": [p._id for p in self.game.teams[0]._lineup],
+                "season": self.game.teams[0]._season,
+                "coach": self.game.teams[0]._coach,
+                "record": self.game.teams[0]._record,
+                "arena": self.game.teams[0]._arena
             },
             {
                 "team_id": 1,
                 "team_name": self.game.teams[1]._name,
-                "players": [self._player_info(p, 1) for p in self.game.teams[1]._players]
+                "players": [self._player_info(p, 1) for p in self.game.teams[1]._players],
+                "starting_lineup": [p._id for p in self.game.teams[1]._lineup],
+                "season": self.game.teams[1]._season,
+                "coach": self.game.teams[1]._coach,
+                "record": self.game.teams[1]._record,
+                "arena": self.game.teams[1]._arena
             }
         ]
 
@@ -248,12 +258,40 @@ class GameLogger:
         # Create and add event to the log
         if details is None:
             details = {}
-
+        
+        # Collect player states
+        player_states = {}
+        for team_id, team in enumerate(self.game.teams):
+            for player in team._players:
+                player_states[player._id] = {
+                    "ast": player._stat.ast,
+                    "blk": player._stat.blk,
+                    "court_time": player._stat.court_time,
+                    "drb": player._stat.drb,
+                    "energy": round(player._stat.energy, 1),
+                    "fg": player._stat.fg,
+                    "fga": player._stat.fga,
+                    "fg_threepoint": player._stat.fg_threepoint,
+                    "fga_threepoint": player._stat.fga_threepoint,
+                    "ft": player._stat.ft,
+                    "fta": player._stat.fta,
+                    "orb": player._stat.orb,
+                    "mp": player._stat.mp,  # remember this is stored as int
+                    "pf": player._stat.pf,
+                    "pts": player._stat.pts,
+                    "stl": player._stat.stl,
+                    "tov": player._stat.tov,
+                }
+        details["player_states"] = player_states
+        if event_type == "substitution":
+            team_id = details["team_id"]
+        else:
+            team_id = self.game.o
         event = GameEvent(
             event_type=event_type,
             timestamp=self.game.game_clock,
             quarter=self.game.quarter_no,
-            team_id=self.game.o,  # Current offensive team
+            team_id=team_id,  # Current offensive team
             player_id=player_id,
             details=details
         )
@@ -286,7 +324,7 @@ class GameLogger:
                     "blk": player._stat.blk,
                     "court_time": player._stat.court_time,
                     "drb": player._stat.drb,
-                    "energy": player._stat.energy,
+                    "energy": round(player._stat.energy, 1),
                     "fg": player._stat.fg,
                     "fga": player._stat.fga,
                     "fg_threepoint": player._stat.fg_threepoint,
@@ -362,7 +400,7 @@ class GameLogger:
     def save_to_file(self, filename=None) -> str:
         # Save the event log to a JSON file
         if filename is None:
-            filename = f"game_{self.event_log.game_id}.json"
+            filename = f"data/games/game_{self.event_log.game_id}.json"
 
         with open(filename, 'w') as f:
             f.write(self.event_log.to_json())

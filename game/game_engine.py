@@ -100,7 +100,17 @@ def take_shot(g) -> None:
     shot_made = do_shot()
     foul_committed = do_foul()
     record_stat(g, 'take_shot', shot_type=shot_type)
-    g.fts = 3 if shot_type == 'fga_threepoint' else 2
+    # g.fts = 3 if shot_type == 'fga_threepoint' else 2
+    if shot_made:
+        if foul_committed: # and-1
+            g.fts = 1
+        else: # shot made, no foul
+            g.fts = 0
+    else:
+        if foul_committed:
+            g.fts = 3 if shot_type == 'fga_threepoint' else 2
+        else:
+            g.fts = 0
 
     # Prepare to log shot event
     ensure_logger(g)
@@ -126,7 +136,7 @@ def take_shot(g) -> None:
         shot_details["defender_id"] = defender._id
 
     if shot_made:
-        record_stat(g, 'shot_made', shot_type=shot_type, amt=g.fts)
+        record_stat(g, 'shot_made', shot_type=shot_type, amt=points)
         g.logger.log_event(
             event_type="shot_made",
             player_id=shot_taker._id,
@@ -263,9 +273,6 @@ def end_of_quarter(g) -> None:
 
 
 def game_over(g) -> None:
-    # for clean up
-    round_mp(g, g.o)
-    round_mp(g, g.d)
     ensure_logger(g)
     # Log game over event
     g.logger.log_event(
@@ -275,7 +282,11 @@ def game_over(g) -> None:
             "home_score": g.teams[0]._stat.pts,
             "away_score": g.teams[1]._stat.pts
         }
+        # player_states needs mp stat in seconds, so round_mp() comes after
     )
+    # for clean up
+    round_mp(g, g.o)
+    round_mp(g, g.d)
 
     # Save the game log to a file
     g.logger.save_to_file()

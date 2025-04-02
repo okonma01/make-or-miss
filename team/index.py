@@ -25,6 +25,10 @@ class TeamGameSim():
         self._id: str = generate_id(self)
         TeamGameSim.count += 1
         self._name: str = str()
+        self._season: str = str()
+        self._coach: str = str()
+        self._record: str = str()
+        self._arena: str = str()
         self._players: List[PlayerGameSim] = list()
         self._lineup: List[PlayerGameSim] = list()
         self._bench: List[PlayerGameSim] = list()

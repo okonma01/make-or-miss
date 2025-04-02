@@ -8,6 +8,8 @@ from team.util import get_best_at_position
 from game.event import GameLogger
 
 # Add this helper function at the top of the file
+
+
 def ensure_logger(g) -> None:
     """Initialize logger if it doesn't exist yet"""
     if not hasattr(g, 'logger') or g.logger is None:
@@ -47,6 +49,9 @@ def do_subs(g, t: int) -> bool:
 
     player_set = set(g.teams[t]._bench)
 
+    # Make sure the logger exists
+    ensure_logger(g)
+
     # sub player at pos 3 (SF) out first
     for p in sub_queue:
         # do not sub if player is free throw man
@@ -55,6 +60,19 @@ def do_subs(g, t: int) -> bool:
         sub_in = get_best_at_position(p, player_set, sub=True)
         sub_out = g.teams[t]._lineup[p-1]
         if sub_in and fatigue_adj_ovr(sub_in, p) > fatigue_adj_ovr(sub_out, p):
+            # Log the substitution before actually swapping players
+            g.logger.log_event(
+                event_type="substitution",
+                player_id=sub_out._id,  # Player coming in
+                details={
+                    "player_in_id": sub_in._id,
+                    "player_out_id": sub_out._id,
+                    "position": p,
+                    "team_id": t
+                }
+            )
+
+            # Now perform the actual substitution
             swap_players(g, t, sub_in, sub_out)
             index = g.teams[t]._lineup.index(sub_in)
             reset_player_stat(g, t, index, 'bench_time')
@@ -292,11 +310,11 @@ def run_clock(g, turnover: bool = False) -> None:
     # TO-DO:
     # 1. add minutes to players currently on the court - DONE
     # 2. tire on-court players out; recover players on bench - DONE (check record_stat 'energy')
-    
+
     # Store the current game clock time before updating
     previous_time = g.game_clock
     previous_minute = previous_time // 60
-    
+
     # Existing run_clock logic to determine seconds elapsed
     if turnover:
         seconds = random.randint(8, 14)
@@ -305,7 +323,6 @@ def run_clock(g, turnover: bool = False) -> None:
             seconds = random.randint(8, 16)
         else:
             seconds = random.randint(16, 24)
-
 
     # Update clock
     new_time = max(0, g.game_clock - seconds)
@@ -317,10 +334,10 @@ def run_clock(g, turnover: bool = False) -> None:
         ensure_logger(g)
         # Create a minute-based checkpoint
         g.logger.create_checkpoint(checkpoint_type="minute")
-   
+
     # Update the game clock
     g.game_clock = new_time
-    
+
     # Update players' minutes and fatigue
     update_mp(g, seconds)
     update_energy(g, seconds)
