@@ -202,6 +202,7 @@ def load_team_from_json(json_file_path):
 
     # Set team properties
     team._name = team_data.get("team_name", "")
+    team._abbreviation = team_data.get("abbreviation", "")
     team._id = team_data.get("team_id", "")
     team._season = team_data.get("season", "")
     team._coach = team_data.get("coach", "")

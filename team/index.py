@@ -25,6 +25,7 @@ class TeamGameSim():
         self._id: str = generate_id(self)
         TeamGameSim.count += 1
         self._name: str = str()
+        self._abbreviation: str = str()
         self._season: str = str()
         self._coach: str = str()
         self._record: str = str()

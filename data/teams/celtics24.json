@@ -1,6 +1,7 @@
 {
   "team_id": "celtics24",
   "team_name": "Boston Celtics",
+  "abbreviation": "BOS",
   "season": "2024",
   "players": {
     "plLas": {

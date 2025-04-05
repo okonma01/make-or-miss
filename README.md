@@ -1,14 +1,14 @@
 # Make or Miss - Basketball Simulation
 
-Welcome to the "Make or Miss" basketball simulation project. This simulation provides a detailed basketball game engine with events logging, team management, and player interactions. The project is designed to simulate basketball games and record detailed event data for later visualization and analysis.
+This simulation provides a detailed basketball game engine with events logging, team management, and player interactions. The project is designed to simulate basketball games and record detailed event data for later visualization and analysis.
 
 ## Project Structure
 
 The repository is organized into several directories:
 
-- `game/`: Contains the core game engine, event logging, game state management, and related utilities.
-- `team/`: Includes team-related functionality and data.
 - `player/`: Manages player attributes, ratings, and statistics.
+- `team/`: Includes team-related functionality and data.
+- `game/`: Contains the core game engine, event logging, game state management, and related utilities.
 - `util/`: Contains utility modules for various project aspects, including data loading functions.
 - `data/`: Stores team and generated game data and simulation results.
 
@@ -21,6 +21,9 @@ The `game/` directory houses the game engine responsible for simulating basketba
 - Player selection based on skills and ratings
 - Game state management (clock, score, quarter tracking)
 - Comprehensive event logging for game playback and analysis
+
+### State Machine Diagram
+![Simulation FSM diagram](fsm.png)
 
 ### Event Logging System
 
@@ -58,19 +61,18 @@ To get started with the simulation, follow these steps:
 2. Install the required dependencies: `pip install -r requirements.txt`
 3. Run the simulation: `python main.py`
 
-The simulation will load team data from CSV files and generate a complete game simulation with detailed event logs saved as JSON.
+The simulation will load team data from `data/teams` and generate a complete game simulation with detailed event logs saved as JSON. The game file will be saved in the `data/games` directory.
 
 ## Current Development
 
 The project is currently focused on:
-1. Refining the game engine and event logging system
-2. Creating a checkpoint system for efficient game state recall
-3. Preparing for frontend visualization of game simulations
-4. Testing and validating the event data structure
+1. Refining the game simulation engine
+2. Improving the frontend visualization of game simulations
+3. Deploying the simulation as a web application for public access
 
 ## Credits
 
-This project is maintained by Okonma.
+This project was developed by Okonma and GitHub Copilot.
 
 ## License
 

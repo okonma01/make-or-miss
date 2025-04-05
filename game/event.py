@@ -220,6 +220,7 @@ class GameLogger:
             {
                 "team_id": 0,
                 "team_name": self.game.teams[0]._name,
+                "abbreviation": self.game.teams[0]._abbreviation,
                 "players": [self._player_info(p, 0) for p in self.game.teams[0]._players],
                 "starting_lineup": [p._id for p in self.game.teams[0]._lineup],
                 "season": self.game.teams[0]._season,
@@ -230,6 +231,7 @@ class GameLogger:
             {
                 "team_id": 1,
                 "team_name": self.game.teams[1]._name,
+                "abbreviation": self.game.teams[1]._abbreviation,
                 "players": [self._player_info(p, 1) for p in self.game.teams[1]._players],
                 "starting_lineup": [p._id for p in self.game.teams[1]._lineup],
                 "season": self.game.teams[1]._season,

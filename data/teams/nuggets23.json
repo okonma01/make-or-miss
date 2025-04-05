@@ -1,6 +1,7 @@
 {
   "team_id": "nuggets23",
   "team_name": "Denver Nuggets",
+  "abbreviation": "DEN",
   "season": "2023",
   "players": {
     "pTpV7": {

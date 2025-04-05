@@ -1,6 +1,7 @@
 {
   "team_id": "raptors19",
   "team_name": "Toronto Raptors",
+  "abbreviation": "TOR",
   "season": "2019",
   "players": {
     "pMg33": {
